@@ -1,11 +1,11 @@
-[![GitHub issues](https://img.shields.io/github/issues/TrainingByPackt/Beginning-Java.svg)](https://github.com/TrainingByPackt/Beginning-Java/issues)
-[![GitHub forks](https://img.shields.io/github/forks/TrainingByPackt/Beginning-Java.svg)](https://github.com/TrainingByPackt/Beginning-Java/network)
-[![GitHub stars](https://img.shields.io/github/stars/TrainingByPackt/Beginning-Java.svg)](https://github.com/TrainingByPackt/Beginning-Java/stargazers)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/TrainingByPackt/Beginning-Java/pulls)
+[![GitHub issues](https://img.shields.io/github/issues/TrainingByPackt/Java-Fundamentals.svg)](https://github.com/TrainingByPackt/Java-Fundamentals/issues)
+[![GitHub forks](https://img.shields.io/github/forks/TrainingByPackt/Java-Fundamentals.svg)](https://github.com/TrainingByPackt/Java-Fundamentals/network)
+[![GitHub stars](https://img.shields.io/github/stars/TrainingByPackt/Java-Fundamentals.svg)](https://github.com/TrainingByPackt/Java-Fundamentals/stargazers)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/TrainingByPackt/Java-Fundamentals/pulls)
 
 
 
-# Beginning Java
+# Java Fundamentals
 In the world of programming, there's frequent upgrading of languages and technologies. With the new, the old has to go. At times, the evolvement of a language is so drastic that it renders the knowledge of programming in the old version almost useless. Developers have to learn everything from scratch. This is exhaustive.
 With Java, it's a bit different. It's been decades since Java made an entry into the programming world. However, Java programmers just had to build upon the knowledge of the prior versions when a new version is launched. So, in every sense, becoming a Java developer is a good bet. 
 The common notion regarding Java is that it's a complex language to learn. Not so with this course. This course with a blend of different learning tools makes learning Java an interesting affair.
