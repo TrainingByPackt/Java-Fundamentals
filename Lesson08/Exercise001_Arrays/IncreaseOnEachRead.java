@@ -17,9 +17,9 @@ public class IncreaseOnEachRead {
     /**
      * Loads users from a CSV file into an array that increases on each record read.
      */
-    public static User[] loadUsers(String fileToReadFrom) throws Exception {
+    public static User[] loadUsers(String pathToFile) throws Exception {
         User[] users = new User[0];
-        BufferedReader lineReader = new BufferedReader(new FileReader(fileToReadFrom));
+        BufferedReader lineReader = new BufferedReader(new FileReader(pathToFile));
         try (CSVReader reader = new CSVReader(lineReader)) {
             String [] row = null;
             while ( (row = reader.readRow()) != null) {
@@ -31,18 +31,11 @@ public class IncreaseOnEachRead {
                 // Switch
                 users = newUsers;
 
-                users[users.length - 1] = userFromRow(row);
+                users[users.length - 1] = User.fromValues(row);
             }
         }
 
         return users;
-    }
-
-    private static User userFromRow(String [] row) {
-        int id = Integer.parseInt(row[0]);
-        String name = row[1];
-        String email = row[2];
-        return new User(id, name, email);
     }
 
 }

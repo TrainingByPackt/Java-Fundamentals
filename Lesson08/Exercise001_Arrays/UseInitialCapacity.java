@@ -23,10 +23,10 @@ public class UseInitialCapacity {
      * Loads users from a CSV file into an array with initial capacity. The array will have to increase
      * if reached the limit. It also needs to be trimmed at the end to ensure no empty rows in it.
      */
-    public static User[] loadUsers(String fileToReadFrom) throws Exception {
+    public static User[] loadUsers(String pathToFile) throws Exception {
         User[] users = new User[INITIAL_CAPACITY];
 
-        BufferedReader lineReader = new BufferedReader(new FileReader(fileToReadFrom));
+        BufferedReader lineReader = new BufferedReader(new FileReader(pathToFile));
         try (CSVReader reader = new CSVReader(lineReader)) {
             String [] row = null;
             while ( (row = reader.readRow()) != null) {
@@ -36,7 +36,7 @@ public class UseInitialCapacity {
                     users = resizeArray(users, users.length + INITIAL_CAPACITY);
                 }
 
-                users[users.length - 1] = userFromRow(row);
+                users[users.length - 1] = User.fromValues(row);
             }
 
             // If read less rows than array capacity, trim it
@@ -58,13 +58,6 @@ public class UseInitialCapacity {
         // Copy data over
         System.arraycopy(users, 0, newUsers, 0, lengthToCopy);
         return newUsers;
-    }
-
-    private static User userFromRow(String [] row) {
-        int id = Integer.parseInt(row[0]);
-        String name = row[1];
-        String email = row[2];
-        return new User(id, name, email);
     }
 
 }
