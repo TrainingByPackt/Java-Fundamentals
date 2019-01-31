@@ -19,15 +19,10 @@ public class IncreaseOnEachRead {
      */
     public static User[] loadUsers(String fileToReadFrom) throws Exception {
         User[] users = new User[0];
-
-        // Ignore header and first line will be index 0 in the array
-        int rowIndex = 0;
         BufferedReader lineReader = new BufferedReader(new FileReader(fileToReadFrom));
         try (CSVReader reader = new CSVReader(lineReader)) {
             String [] row = null;
             while ( (row = reader.readRow()) != null) {
-                rowIndex = reader.getLineCount() - 1;
-
                 // Increase array size by one
                 // Create new array
                 User[] newUsers = new User[users.length + 1];
@@ -36,7 +31,7 @@ public class IncreaseOnEachRead {
                 // Switch
                 users = newUsers;
 
-                users[rowIndex] = userFromRow(row);
+                users[users.length - 1] = userFromRow(row);
             }
         }
 

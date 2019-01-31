@@ -26,16 +26,12 @@ public class UseInitialCapacity {
     public static User[] loadUsers(String fileToReadFrom) throws Exception {
         User[] users = new User[INITIAL_CAPACITY];
 
-        // Ignore header and first line will be index 0 in the array
-        int rowIndex = 0;
         BufferedReader lineReader = new BufferedReader(new FileReader(fileToReadFrom));
         try (CSVReader reader = new CSVReader(lineReader)) {
             String [] row = null;
             while ( (row = reader.readRow()) != null) {
-                rowIndex = reader.getLineCount() - 1;
-
                 // Reached end of the array
-                if (users.length == rowIndex) {
+                if (users.length == reader.getLineCount()) {
                     // Increase the array in INITIAL_CAPACITY
                     // Create new array
                     User[] newUsers = new User[users.length + INITIAL_CAPACITY];
@@ -45,19 +41,20 @@ public class UseInitialCapacity {
                     users = newUsers;
                 }
 
-                users[rowIndex] = userFromRow(row);
+                users[users.length - 1] = userFromRow(row);
+            }
+
+            // If read less rows than array capacity, trim it
+            if (reader.getLineCount() < users.length - 1) {
+                // Create new array
+                User[] newUsers = new User[reader.getLineCount()];
+                // Copy data over
+                System.arraycopy(users, 0, newUsers, 0, reader.getLineCount());
+                // Switch
+                users = newUsers;
             }
         }
 
-        // If read less rows than array capacity, trim it
-        if (rowIndex < users.length - 1) {
-            // Create new array
-            User[] newUsers = new User[rowIndex + 1];
-            // Copy data over
-            System.arraycopy(users, 0, newUsers, 0, rowIndex - 1);
-            // Switch
-            users = newUsers;
-        }
 
         return users;
     }
