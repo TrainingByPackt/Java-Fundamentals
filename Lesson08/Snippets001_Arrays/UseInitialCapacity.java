@@ -33,12 +33,7 @@ public class UseInitialCapacity {
                 // Reached end of the array
                 if (users.length == reader.getLineCount()) {
                     // Increase the array in INITIAL_CAPACITY
-                    // Create new array
-                    User[] newUsers = new User[users.length + INITIAL_CAPACITY];
-                    // Copy data over
-                    System.arraycopy(users, 0, newUsers, 0, users.length);
-                    // Switch
-                    users = newUsers;
+                    users = resizeArray(users, users.length + INITIAL_CAPACITY);
                 }
 
                 users[users.length - 1] = userFromRow(row);
@@ -46,17 +41,23 @@ public class UseInitialCapacity {
 
             // If read less rows than array capacity, trim it
             if (reader.getLineCount() < users.length - 1) {
-                // Create new array
-                User[] newUsers = new User[reader.getLineCount()];
-                // Copy data over
-                System.arraycopy(users, 0, newUsers, 0, reader.getLineCount());
-                // Switch
-                users = newUsers;
+                users = resizeArray(users, reader.getLineCount());
             }
         }
 
-
         return users;
+    }
+
+    private static User[] resizeArray(User[] users, int newCapacity) {
+        // Create new array
+        User[] newUsers = new User[newCapacity];
+
+        // If increasing, we can only copy what was in there
+        int lengthToCopy = newCapacity > users.length ? users.length : newCapacity;
+
+        // Copy data over
+        System.arraycopy(users, 0, newUsers, 0, lengthToCopy);
+        return newUsers;
     }
 
     private static User userFromRow(String [] row) {
