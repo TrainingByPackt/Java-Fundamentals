@@ -8,7 +8,7 @@ import java.io.IOException;
 public class ReadCSVFile {
 
     public static void main(String [] args) throws IOException {
-        String fileName = "../data/users.csv";
+        String fileName = args[0];
         FileReader fileReader = new FileReader(fileName);
         try (BufferedReader reader = new BufferedReader(fileReader)) {
             String line;

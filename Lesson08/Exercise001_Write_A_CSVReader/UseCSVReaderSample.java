@@ -5,7 +5,7 @@ import java.io.IOException;
 public class UseCSVReaderSample {
 
     public static void main (String [] args) throws IOException {
-        String fileName = "../data/users.csv";
+        String fileName = args[0];
         FileReader fileReader = new FileReader(fileName);
         BufferedReader reader = new BufferedReader(fileReader);
         try (CSVReader csvReader = new CSVReader(reader)) {
