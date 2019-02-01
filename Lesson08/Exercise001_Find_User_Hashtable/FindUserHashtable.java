@@ -22,7 +22,7 @@ public class FindUserHashtable {
 
             User user = (User) users.get(email);
             System.out.printf("User with email '%s' found!", email);
-            System.out.printf(" ID: %d, Name: %s", user.id, user.name);
+            System.out.printf(" ID: %d, Name: %s\n", user.id, user.name);
         }
     }
 
