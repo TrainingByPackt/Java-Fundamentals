@@ -17,7 +17,7 @@ public class FindUserHashtable {
             if (!users.containsKey(email)) {
                 // User email not in file
                 System.out.printf("Sorry, user with email %s not found.\n", email);
-                System.exit(1);
+                return;
             }
 
             User user = (User) users.get(email);
