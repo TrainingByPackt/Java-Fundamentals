@@ -29,7 +29,7 @@ public class SortUsers {
             comparator = new ByEmailComparator();
             break;
             default:
-            System.out.printf("Sorry, invalid option: %s", input);
+            System.out.printf("Sorry, invalid option: %s\n", input);
             return;
         }
 
