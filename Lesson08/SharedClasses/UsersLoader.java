@@ -28,7 +28,7 @@ public class UsersLoader {
         try (CSVReader reader = new CSVReader(lineReader)) {
             String [] row = null;
             while ( (row = reader.readRow()) != null) {
-                users.addElement(User.fromValues(row));
+                users.add(User.fromValues(row));
             }
         }
 
