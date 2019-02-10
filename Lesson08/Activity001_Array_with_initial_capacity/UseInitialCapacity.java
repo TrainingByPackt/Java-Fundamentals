@@ -32,7 +32,7 @@ public class UseInitialCapacity {
             while ( (row = reader.readRow()) != null) {
                 // Reached end of the array
                 if (users.length == reader.getLineCount()) {
-                    // Increase the array in INITIAL_CAPACITY
+                    // Increase the array by INITIAL_CAPACITY
                     users = resizeArray(users, users.length + INITIAL_CAPACITY);
                 }
 
