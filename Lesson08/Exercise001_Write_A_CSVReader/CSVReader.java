@@ -12,10 +12,15 @@ public class CSVReader implements Closeable {
     private int lineCount = 0;
 
     public CSVReader(BufferedReader reader) throws IOException {
+        this(reader, true);
+    }
+
+    public CSVReader(BufferedReader reader, boolean ignoreHeader) throws IOException {
         this.reader = reader;
 
-        // Ignores the header
-        reader.readLine();
+        if (ignoreHeader) {
+            reader.readLine();
+        }
     }
 
     public void close() throws IOException {
