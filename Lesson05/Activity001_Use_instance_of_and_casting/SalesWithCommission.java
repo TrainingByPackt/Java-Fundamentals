@@ -1,13 +1,13 @@
 public class SalesWithCommission extends Sales implements Employee {
 
-    private final double totalSales;
+    private final double grossSales;
 
-    public SalesWithCommission(double totalSales) {
-        this.totalSales = totalSales;
+    public SalesWithCommission(double grossSales) {
+        this.grossSales = grossSales;
     }
 
     public double getCommission() {
-        return totalSales * 0.15;
+        return grossSales * 0.15;
     }
 
 }
