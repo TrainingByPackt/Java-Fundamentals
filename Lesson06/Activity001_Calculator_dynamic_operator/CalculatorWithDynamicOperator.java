@@ -4,7 +4,7 @@ public class CalculatorWithDynamicOperator {
     private static final Operator [] OPERATORS = {
         new Division(),
         new Multiplication(),
-        new Operator(),
+        DEFAULT_OPERATOR,
         new Subtraction(),
     };
 
