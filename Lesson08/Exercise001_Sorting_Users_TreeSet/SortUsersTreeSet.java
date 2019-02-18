@@ -7,6 +7,8 @@ public class SortUsersTreeSet {
 
     public static void main (String [] args) throws IOException {
         Scanner reader = new Scanner(System.in);
+
+        System.out.print("Type a field to sort by: ");
         String input = reader.nextLine();
 
         Comparator<User> comparator;

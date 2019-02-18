@@ -67,7 +67,7 @@ if [ ! -f $DIR/adult.data ]; then
 fi
 
 # Run one class
-if [[ "$1" -eq "class" ]]; then
+if [[ $# -eq 2 && "$1" -eq "class" ]]; then
     execute_class_with_args $2
 fi
 
