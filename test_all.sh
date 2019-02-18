@@ -14,6 +14,7 @@ CLASSPATH=$CLASSPATH:Lesson05/SharedClasses/
 
 # Lesson 06
 CLASSPATH=$CLASSPATH:Lesson06/Activity001_Calculator_dynamic_operator/
+CLASSPATH=$CLASSPATH:Lesson06/Activity001_Calculator_final/
 
 # Lesson 08
 CLASSPATH=$CLASSPATH:Lesson08/Activity001_Array_with_initial_capacity/
@@ -63,6 +64,11 @@ execute_class_with_args() {
 # Download adult.data if not present
 if [ ! -f $DIR/adult.data ]; then
     curl -o $DIR/adult.data https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data
+fi
+
+# Run one class
+if [[ "$1" -eq "class" ]]; then
+    execute_class_with_args $2
 fi
 
 # Lesson 04

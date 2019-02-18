@@ -1,6 +1,6 @@
 public class Operator {
 
-    private final String operator;
+    public final String operator;
 
     public Operator() {
         this("+");
