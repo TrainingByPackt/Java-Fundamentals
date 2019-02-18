@@ -28,7 +28,7 @@ public class IncreaseOnEachRead {
                 User[] newUsers = new User[users.length + 1];
                 // Copy data over
                 System.arraycopy(users, 0, newUsers, 0, users.length);
-                // Switch
+                // Swap
                 users = newUsers;
 
                 users[users.length - 1] = User.fromValues(row);
