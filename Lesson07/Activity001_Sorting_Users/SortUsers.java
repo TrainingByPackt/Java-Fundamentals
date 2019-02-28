@@ -15,6 +15,7 @@ public class SortUsers {
         System.out.printf("%d unique users found.\n", users.size());
 
         Scanner reader = new Scanner(System.in);
+        System.out.print("What field you want to sort by: ");
         String input = reader.nextLine();
 
         Comparator<User> comparator;
