@@ -15,10 +15,10 @@ public class CSVReader implements Closeable {
         this(reader, true);
     }
 
-    public CSVReader(BufferedReader reader, boolean ignoreHeader) throws IOException {
+    public CSVReader(BufferedReader reader, boolean ignoreFirstLine) throws IOException {
         this.reader = reader;
 
-        if (ignoreHeader) {
+        if (ignoreFirstLine) {
             reader.readLine();
         }
     }
