@@ -17,27 +17,27 @@ CLASSPATH=$CLASSPATH:Lesson06/Activity001_Calculator_dynamic_operator/
 CLASSPATH=$CLASSPATH:Lesson06/Activity001_Calculator_final/
 
 # Lesson 08
-CLASSPATH=$CLASSPATH:Lesson08/Activity001_Array_with_initial_capacity/
-CLASSPATH=$CLASSPATH:Lesson08/Activity001_Calculate_Average_Salary/
-CLASSPATH=$CLASSPATH:Lesson08/Activity001_Group_wage_by_education/
-CLASSPATH=$CLASSPATH:Lesson08/Activity001_Iterate_On_Vector/
-CLASSPATH=$CLASSPATH:Lesson08/Activity001_Sorting_Users/
-CLASSPATH=$CLASSPATH:Lesson08/Exercise001_Array_increase_on_read/
-CLASSPATH=$CLASSPATH:Lesson08/Exercise001_Compare_Strings_Alphabetically/
-CLASSPATH=$CLASSPATH:Lesson08/Exercise001_Fake_email_sender/
-CLASSPATH=$CLASSPATH:Lesson08/Exercise001_Find_User_By_String/
-CLASSPATH=$CLASSPATH:Lesson08/Exercise001_Find_User_Hashtable/
-CLASSPATH=$CLASSPATH:Lesson08/Exercise001_Reading_Files/
-CLASSPATH=$CLASSPATH:Lesson08/Exercise001_Sorting_Users_TreeSet/
-CLASSPATH=$CLASSPATH:Lesson08/Exercise001_Vector/
-CLASSPATH=$CLASSPATH:Lesson08/Exercise001_Write_A_CSVReader/
-CLASSPATH=$CLASSPATH:Lesson08/SharedClasses/
-CLASSPATH=$CLASSPATH:Lesson08/Snippet001_Comparable/
-CLASSPATH=$CLASSPATH:Lesson08/Snippet001_Generics/
-CLASSPATH=$CLASSPATH:Lesson08/Snippet001_Iterators_and_Iterable/
-CLASSPATH=$CLASSPATH:Lesson08/Snippet001_Iterators_and_Iterable/
+CLASSPATH=$CLASSPATH:Lesson07/Activity001_Array_with_initial_capacity/
+CLASSPATH=$CLASSPATH:Lesson07/Activity001_Calculate_Average_Salary/
+CLASSPATH=$CLASSPATH:Lesson07/Activity001_Group_wage_by_education/
+CLASSPATH=$CLASSPATH:Lesson07/Activity001_Iterate_On_Vector/
+CLASSPATH=$CLASSPATH:Lesson07/Activity001_Sorting_Users/
+CLASSPATH=$CLASSPATH:Lesson07/Exercise001_Array_increase_on_read/
+CLASSPATH=$CLASSPATH:Lesson07/Exercise001_Compare_Strings_Alphabetically/
+CLASSPATH=$CLASSPATH:Lesson07/Exercise001_Fake_email_sender/
+CLASSPATH=$CLASSPATH:Lesson07/Exercise001_Find_User_By_String/
+CLASSPATH=$CLASSPATH:Lesson07/Exercise001_Find_User_Hashtable/
+CLASSPATH=$CLASSPATH:Lesson07/Exercise001_Reading_Files/
+CLASSPATH=$CLASSPATH:Lesson07/Exercise001_Sorting_Users_TreeSet/
+CLASSPATH=$CLASSPATH:Lesson07/Exercise001_Vector/
+CLASSPATH=$CLASSPATH:Lesson07/Exercise001_Write_A_CSVReader/
+CLASSPATH=$CLASSPATH:Lesson07/SharedClasses/
+CLASSPATH=$CLASSPATH:Lesson07/Snippet001_Comparable/
+CLASSPATH=$CLASSPATH:Lesson07/Snippet001_Generics/
+CLASSPATH=$CLASSPATH:Lesson07/Snippet001_Iterators_and_Iterable/
+CLASSPATH=$CLASSPATH:Lesson07/Snippet001_Iterators_and_Iterable/
 
-USERS_FILE=Lesson08/data/users.csv
+USERS_FILE=Lesson07/data/users.csv
 
 echo "Deleting old class files..."
 find . -name "*.class" -print0 | xargs -0 rm
@@ -67,8 +67,9 @@ if [ ! -f $DIR/adult.data ]; then
 fi
 
 # Run one class
-if [[ $# -eq 2 && "$1" -eq "class" ]]; then
-    execute_class_with_args $2
+if [[ $# -gt 1 && "$1" -eq "class" ]]; then
+    shift
+    execute_class_with_args $*
 fi
 
 # Lesson 04
