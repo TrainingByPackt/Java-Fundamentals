@@ -6,18 +6,20 @@
 
 
 # Java Fundamentals
-In the world of programming, there's frequent upgrading of languages and technologies. With the new, the old has to go. At times, the evolvement of a language is so drastic that it renders the knowledge of programming in the old version almost useless. Developers have to learn everything from scratch. This is exhaustive.
-With Java, it's a bit different. It's been decades since Java made an entry into the programming world. However, Java programmers just had to build upon the knowledge of the prior versions when a new version is launched. So, in every sense, becoming a Java developer is a good bet. 
-The common notion regarding Java is that it's a complex language to learn. Not so with this course. This course with a blend of different learning tools makes learning Java an interesting affair.
-There's a growing trend of developers wanting to make a mark in the Android market. Android programming has Java in its roots. This course will provide you with the right start to learning the specifics of writing Android applications.
+Since its inception, Java has stormed the programming world. Its features and functionalities provide developers with the tools needed to write robust cross-platform applications. Java Fundamentals introduces you to these tools and functionalities that will enable you to create Java programs. The book begins with an introduction to the language, its philosophy, and evolution over time, until the latest release. You'll learn how the javac/java tools work and what Java packages are - the way a Java program is usually organized. Once you are comfortable with this, you'll be introduced to advanced concepts of the language, such as control flow keywords. You'll explore object-oriented programming and the part it plays in making Java what it is. In the concluding chapters, you'll get to grips with classes, typecasting, and interfaces, and understand the use of data structures, arrays, strings, handling exceptions, and creating generics.
+By the end of this book, you will have learned to write programs, automate tasks, and follow advanced courses on algorithms and data structures or explore more advanced Java courses.
 
 
 
 ## What you will learn
-* This course is more of a hand-on, practical guide than a theoretical one. A quick introduction of Java includes writing simple Java programs within no time.
-* All the meat of the language, such as data types, data structures, and control flow are explained justifiably so that you don't miss out on the important language-building concepts.
-* OOP is explained in depth, with emphasis on typecasting, abstract classes, and interfaces.
-* You'll create your own Generics, and learn to handle exceptions.
+* Create and run Java programs
+* Use data types, data structures, and control flow in your code
+* Implement best practices while creating objects
+* Work with constructors and inheritance
+* Understand advanced data structures to organize and store data
+* Employ generics for stronger check-types during compilation
+* Learn to handle exceptions in your code
+
 
 
 
