@@ -1,16 +1,41 @@
+import java.util.HashSet;
+
+class Student {
+    private String name;
+    private Integer age;
+    private Integer yearOfPassing;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getYearOfPassing() {
+        return yearOfPassing;
+    }
+
+    public void setYearOfPassing(int releaseYr) {
+        this.yearOfPassing = releaseYr;
+    }
+}
+
+/**
+ * Example class demonstrating the set behavior We will create 3 objects and add
+ * into the Set Later will create a new object resembling same as one of the 3
+ * objects created and added into the set
+ */
 public class HashCodeExample {
-
-    @Override
-    public boolean equals(Object o) {
-        Student m = (Student) o;
-        return m.name.equals(this.name) && m.age.equals(this.age) && m.yearOfPassing.equals(this.yearOfPassing);
-    }
-
-    @Override
-    public int hashCode() {
-        return this.name.hashCode() + this.age.hashCode() + this.yearOfPassing.hashCode();
-    }
-
     public static void main(String[] args) {
         Student m = new Student();
         m.setName("RAYMONDS");
@@ -24,7 +49,8 @@ public class HashCodeExample {
         m2.setName("MAGGY");
         m2.setAge(18);
         m2.setYearOfPassing(2012);
-        Set<Student> set = new HashSet<Student>();
+
+        HashSet<Student> set = new HashSet<Student>();
         set.add(m);
         set.add(m1);
         set.add(m2);
@@ -38,8 +64,9 @@ public class HashCodeExample {
         m3.setName("ALLEN");
         m3.setAge(19);
         m3.setYearOfPassing(2010);
-        // this element will not be added if hashCode and equals methods are implemented
+        // this Student will be added as hashCode() and equals() are not implemented
         set.add(m3);
+        // 2 students with same details (ALLEN 19 will be noticed twice)
         System.out.println("After Adding ALLEN for second time: ");
         for (Student mm : set) {
             System.out.println(mm.getName() + " " + mm.getAge());
