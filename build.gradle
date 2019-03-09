@@ -1,0 +1,47 @@
+// Empty catch all compile tasks
+task compile {}
+
+// Calculate classpath
+def dirsWithJavaFiles = [];
+new File(".").eachDir { lessonDir ->
+    if (lessonDir.name.startsWith("Lesson")) {
+        lessonDir.eachDir { codeDir ->
+            if (codeDir.listFiles().count({it.name.endsWith(".java")}) > 0) {
+                dirsWithJavaFiles << codeDir.canonicalPath
+            }
+        }
+    }
+}
+def classpath = dirsWithJavaFiles.toUnique().join(":")
+
+new File(".").eachDir { lessonDir ->
+    // For each Lesson Directory
+    if (lessonDir.name.startsWith("Lesson")) {
+
+        // Catch all compile tasks for this lesson
+        task "compile${lessonDir.name}" {}
+        compile.dependsOn "compile${lessonDir.name}"
+
+        lessonDir.eachDir { codeDir ->
+            if (codeDir.name.startsWith("Exercise") || codeDir.name.startsWith("Activity") || codeDir.name.startsWith("Snippet")) {
+                def command = ['javac', '-cp', classpath]
+                def javaFiles = []
+                codeDir.eachFile {
+                    if (it.name.endsWith('.java')) {
+                        command.add(it.name)
+                        javaFiles.add(it.name)
+                    }
+                }
+
+                task "compile${lessonDir.name}${codeDir.name}" (type:Exec) {
+                    commandLine command
+                    inputs.files javaFiles
+                    outputs.files '*.class'
+                    workingDir codeDir
+                }
+
+                tasks["compile${lessonDir.name}"].dependsOn "compile${lessonDir.name}${codeDir.name}"
+            }
+        }
+    }
+}

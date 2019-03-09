@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
-public class RollerCoasterWithAgeAndHeight {
+public class RollerCoasterWithAge {
 
-    class TooYoungException extends Exception {
+    static class TooYoungException extends Exception {
         int age;
         String name;
 
@@ -12,7 +12,7 @@ public class RollerCoasterWithAgeAndHeight {
         }
     }
 
-    public static class RollerCoasterWithAge {
+    public static class Main {
         public static void main(String[] args) {
             Scanner input = new Scanner(System.in);
             while (true) {

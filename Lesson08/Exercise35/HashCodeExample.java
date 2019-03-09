@@ -1,4 +1,34 @@
-public class HashCodeExample {
+import java.util.HashSet;
+import java.util.Set;
+
+class Student {
+    private String name;
+    private Integer age;
+    private Integer yearOfPassing;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getYearOfPassing() {
+        return yearOfPassing;
+    }
+
+    public void setYearOfPassing(int releaseYr) {
+        this.yearOfPassing = releaseYr;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -10,6 +40,9 @@ public class HashCodeExample {
     public int hashCode() {
         return this.name.hashCode() + this.age.hashCode() + this.yearOfPassing.hashCode();
     }
+}
+
+public class HashCodeExample {
 
     public static void main(String[] args) {
         Student m = new Student();
