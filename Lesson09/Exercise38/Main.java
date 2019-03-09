@@ -25,7 +25,7 @@ System.out.println("thFunction2 done");
 }
 private static final int EC_NONE = 0;
 private static final int EC_IO = 1;
-private static final int EC_INTERR UPTION = 2;
+private static final int EC_INTERRUPTION = 2;
 int ecFunction1() {
 System.out.println("ecFunction1 start");
 if (rand.nextInt(10) < 2) {
