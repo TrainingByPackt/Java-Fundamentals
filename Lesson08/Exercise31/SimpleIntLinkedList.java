@@ -57,7 +57,7 @@ public class SimpleIntLinkedList {
     Node head;
 
     public static void main(String[] args) {
-        SimpleLinkedList list = new SimpleLinkedList();
+        SimpleIntLinkedList list = new SimpleIntLinkedList();
         list.add(13);
         list.add(39);
         list.add(41);
