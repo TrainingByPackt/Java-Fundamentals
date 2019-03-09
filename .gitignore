@@ -1,3 +1,4 @@
 *.class
 *.data
+.gradle/
 .vscode/
