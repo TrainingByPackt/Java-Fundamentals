@@ -25,6 +25,9 @@ public class Person {
         if (speed > 10) {
             System.out.println("Walking...");
         }
+    }
+
+    public static void main(String[] args) {
         Person me = new Person();
         Person myNeighbour = new Person();
         Person lecturer = new Person();

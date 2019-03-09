@@ -1,4 +1,4 @@
-public class Person {
+public class PersonMakeItWalk {
     // Properties
     int age;
     int height;
