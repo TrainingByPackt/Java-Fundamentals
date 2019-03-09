@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class RollerCoasterWithAgeAndHeight {
 
-    class TooYoungException extends Exception {
+    static class TooYoungException extends Exception {
         int age;
         String name;
 
@@ -12,7 +12,7 @@ public class RollerCoasterWithAgeAndHeight {
         }
     }
 
-    class TooShortException extends Exception {
+    static class TooShortException extends Exception {
         int height;
         String name;
 
