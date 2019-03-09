@@ -2,40 +2,22 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-# Lesson 04
-CLASSPATH=$CLASSPATH:Lesson04/Activity001_Calculator/
-CLASSPATH=$CLASSPATH:Lesson04/Activity001_Calculator_with_operator/
 
-# Lesson 05
-CLASSPATH=$CLASSPATH:Lesson05/Activity001_Create_and_use_interfaces/
-CLASSPATH=$CLASSPATH:Lesson05/Activity001_Use_abstract_class/
-CLASSPATH=$CLASSPATH:Lesson05/Activity001_Use_instance_of_and_casting/
-CLASSPATH=$CLASSPATH:Lesson05/SharedClasses/
+for dir in $(find . -name "*Activity*" -type d); do
+    CLASSPATH=$CLASSPATH:$dir
+done
 
-# Lesson 06
-CLASSPATH=$CLASSPATH:Lesson06/Activity001_Calculator_dynamic_operator/
-CLASSPATH=$CLASSPATH:Lesson06/Activity001_Calculator_final/
+for dir in $(find . -name "*Exercise*" -type d); do
+    CLASSPATH=$CLASSPATH:$dir
+done
 
-# Lesson 08
-CLASSPATH=$CLASSPATH:Lesson07/Activity001_Array_with_initial_capacity/
-CLASSPATH=$CLASSPATH:Lesson07/Activity001_Calculate_Average_Salary/
-CLASSPATH=$CLASSPATH:Lesson07/Activity001_Group_wage_by_education/
-CLASSPATH=$CLASSPATH:Lesson07/Activity001_Iterate_On_Vector/
-CLASSPATH=$CLASSPATH:Lesson07/Activity001_Sorting_Users/
-CLASSPATH=$CLASSPATH:Lesson07/Exercise001_Array_increase_on_read/
-CLASSPATH=$CLASSPATH:Lesson07/Exercise001_Compare_Strings_Alphabetically/
-CLASSPATH=$CLASSPATH:Lesson07/Exercise001_Fake_email_sender/
-CLASSPATH=$CLASSPATH:Lesson07/Exercise001_Find_User_By_String/
-CLASSPATH=$CLASSPATH:Lesson07/Exercise001_Find_User_Hashtable/
-CLASSPATH=$CLASSPATH:Lesson07/Exercise001_Reading_Files/
-CLASSPATH=$CLASSPATH:Lesson07/Exercise001_Sorting_Users_TreeSet/
-CLASSPATH=$CLASSPATH:Lesson07/Exercise001_Vector/
-CLASSPATH=$CLASSPATH:Lesson07/Exercise001_Write_A_CSVReader/
-CLASSPATH=$CLASSPATH:Lesson07/SharedClasses/
-CLASSPATH=$CLASSPATH:Lesson07/Snippet001_Comparable/
-CLASSPATH=$CLASSPATH:Lesson07/Snippet001_Generics/
-CLASSPATH=$CLASSPATH:Lesson07/Snippet001_Iterators_and_Iterable/
-CLASSPATH=$CLASSPATH:Lesson07/Snippet001_Iterators_and_Iterable/
+for dir in $(find . -name "*Shared*" -type d); do
+    CLASSPATH=$CLASSPATH:$dir
+done
+
+for dir in $(find . -name "*Snippet*" -type d); do
+    CLASSPATH=$CLASSPATH:$dir
+done
 
 USERS_FILE=Lesson07/data/users.csv
 
