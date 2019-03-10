@@ -131,6 +131,8 @@ def findExecutions(lessonDir, codeDir) {
         def isOutput = false
         readMe.readLines().each { line ->
             if (execution != null && line == "```") {
+                execution = null
+                isOutput = false
                 return
             }
 
