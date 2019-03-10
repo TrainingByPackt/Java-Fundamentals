@@ -60,8 +60,15 @@ def createCodeDirTestTask(lessonDir, codeDir) {
             standardOutput = new ByteArrayOutputStream()
 
             doLast {
-                def cleanedOutput = standardOutput.toString().replace(System.lineSeparator(), "")
-                assertEquals(execution.output, cleanedOutput)
+                def cleanedExpectedOutput = execution.output
+                    .replaceAll("\\d+ms", "dms")
+                    .replaceAll("\\.+",'.')
+                    .replaceAll("[\n\r]+", "")
+                def cleanedActualOutput = standardOutput.toString()
+                    .replaceAll("\\d+ms", "dms")
+                    .replaceAll("\\.+",'.')
+                    .replaceAll("[\n\r]+", "")
+                assertEquals(cleanedExpectedOutput, cleanedActualOutput)
             }
         }
         tasks["test${lessonDir.name}"].dependsOn testTask
