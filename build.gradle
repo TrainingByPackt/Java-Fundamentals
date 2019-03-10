@@ -2,6 +2,17 @@
 task compile {}
 task clean {}
 
+def findDependencies(dir) {
+    def result = []
+    if (dir.exists()) {
+        dir.readLines().each { line -> 
+            result.addAll(fileTree(line).matching {include '*.java'})
+            result.addAll(findDependencies(new File(line, 'dependsOn')))
+        }
+    }
+    return result
+}
+
 new File(".").eachDir { lessonDir ->
     // For each Lesson Directory
     if (lessonDir.name.startsWith("Lesson")) {
@@ -28,12 +39,7 @@ new File(".").eachDir { lessonDir ->
                     }
                 }
 
-                def d = new File(codeDir, 'dependsOn')
-                if (d.exists()) {
-                    d.readLines().each { line -> 
-                        javaFiles.addAll(fileTree(line).matching {include '*.java'})
-                    }
-                }
+                javaFiles.addAll(findDependencies(new File(codeDir, 'dependsOn')))
 
                 // Clean Activity/Exercise/Snippet Task
                 task "clean${lessonDir.name}${codeDir.name}" (type:Delete) {
