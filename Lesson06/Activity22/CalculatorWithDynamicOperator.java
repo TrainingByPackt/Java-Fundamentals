@@ -5,7 +5,8 @@ public class CalculatorWithDynamicOperator {
 
     // The current operator
     private final Operator operator;
-public CalculatorWithDynamicOperator(double operand1, double operand2, String operator) {
+
+    public CalculatorWithDynamicOperator(double operand1, double operand2, String operator) {
         this.operand1 = operand1;
         this.operand2 = operand2;
         this.operator = Operators.findOperator(operator);
@@ -14,7 +15,8 @@ public CalculatorWithDynamicOperator(double operand1, double operand2, String op
     public double operate() {
         return operator.operate(operand1, operand2);
     }
-public static void main (String [] args) {
+
+    public static void main(String[] args) {
         System.out.println("1 + 1 = " + new CalculatorWithDynamicOperator(1, 1, "+").operate());
         System.out.println("4 - 2 = " + new CalculatorWithDynamicOperator(4, 2, "-").operate());
         System.out.println("1 x 2 = " + new CalculatorWithDynamicOperator(1, 2, "x").operate());
