@@ -11,7 +11,6 @@ import java.util.Vector;
 public class CalculateAverageSalary {
 
     public static void main (String [] args) throws Exception {
-        long start = System.currentTimeMillis();
         Vector wages = loadWages(args[0]);
 
         int totalWage = 0;
@@ -30,7 +29,7 @@ public class CalculateAverageSalary {
             }
         }
 
-        System.out.printf("Read %d rows in %dms\n", wages.size(), System.currentTimeMillis() - start);
+        System.out.printf("Read %d rows\n", wages.size());
         System.out.printf("Average, Min, Max: %d, %d, %d\n", totalWage / wages.size(), minWage, maxWage);
     }
 
