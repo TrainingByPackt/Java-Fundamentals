@@ -8,7 +8,7 @@ public class AnimalTest {
        System.out.println(cat.owner);
       
        Animal animal = (Animal)cat;
-       //System.out.println(animal.owner);
+       // System.out.println(animal.owner);
        System.out.println(cow.sound);
 
        //Animal animal1 = (Animal)cow;
