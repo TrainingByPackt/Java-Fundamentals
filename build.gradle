@@ -15,7 +15,6 @@ task compile {}
 task clean {}
 
 task test {}
-test.dependsOn compile
 
 // Catch all tasks
 task build {}
@@ -55,6 +54,7 @@ def createCodeDirTestTask(lessonDir, codeDir) {
         def testTask = task "test${lessonDir.name}${codeDir.name}_${index + 1}" (type: JavaExec) {
             args = execution.args
             classpath = files(getCompileDir(lessonDir, codeDir))
+            dependsOn tasks["compile${lessonDir.name}${codeDir.name}"]
             main = execution.className
             standardInput = new ByteArrayInputStream(execution.inputs.join('\n').getBytes())
             standardOutput = new ByteArrayOutputStream()
@@ -62,10 +62,12 @@ def createCodeDirTestTask(lessonDir, codeDir) {
             doLast {
                 def cleanedExpectedOutput = execution.output
                     .replaceAll("\\d+ms", "dms")
+                    .replace("\t", "    ")
                     .replaceAll("\\.+",'.')
                     .replaceAll("[\n\r]+", "")
                 def cleanedActualOutput = standardOutput.toString()
                     .replaceAll("\\d+ms", "dms")
+                    .replace("\t", "    ")
                     .replaceAll("\\.+",'.')
                     .replaceAll("[\n\r]+", "")
                 assertEquals(cleanedExpectedOutput, cleanedActualOutput)
