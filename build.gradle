@@ -1,61 +1,181 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'junit:junit:4.12'
+    }
+}
+
+import static org.junit.Assert.assertEquals
+
 // Empty catch all tasks
 task compile {}
 task clean {}
 
-def findDependencies(dir) {
+task test {}
+test.dependsOn compile
+
+// Catch all tasks
+task build {}
+build.dependsOn compile, test
+
+def createCodeDirCleanTask(lessonDir, codeDir) {
+    task "clean${lessonDir.name}${codeDir.name}" (type:Delete) {
+        delete getCompileDir(lessonDir, codeDir)
+    }
+    tasks["clean${lessonDir.name}"].dependsOn "clean${lessonDir.name}${codeDir.name}"
+}
+
+def createCodeDirCompileTask(lessonDir, codeDir) {
+    def javaFiles = []
+    codeDir.eachFile {
+        if (it.name.endsWith('.java')) {
+            javaFiles.add(it)
+        }
+    }
+
+    javaFiles.addAll(findDependencies(codeDir))
+
+    task "compile${lessonDir.name}${codeDir.name}" (type:JavaCompile) {
+        classpath = files(codeDir)
+        destinationDir = getCompileDir(lessonDir, codeDir)
+        source = files(javaFiles)
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+
+        inputs.files files(codeDir)
+    }
+    tasks["compile${lessonDir.name}"].dependsOn "compile${lessonDir.name}${codeDir.name}"
+}
+
+def createCodeDirTestTask(lessonDir, codeDir) {
+    findExecutions(lessonDir, codeDir).eachWithIndex { execution, index ->
+        def testTask = task "test${lessonDir.name}${codeDir.name}_${index + 1}" (type: JavaExec) {
+            classpath = files(getCompileDir(lessonDir, codeDir))
+            main = execution.className
+            standardOutput = new ByteArrayOutputStream()
+
+            doLast {
+                assertEquals(execution.output, standardOutput.toString())
+            }
+        }
+        tasks["test${lessonDir.name}"].dependsOn testTask
+    }
+}
+
+def createLessonCleanTask(lessonDir) {
+    task "clean${lessonDir.name}" {}
+    clean.dependsOn "clean${lessonDir.name}"
+}
+
+def createLessonCompileTask(lessonDir) {
+    task "compile${lessonDir.name}" {}
+    compile.dependsOn "compile${lessonDir.name}"
+}
+
+def createLessonTestTask(lessonDir) {
+    task "test${lessonDir.name}" {}
+    test.dependsOn "test${lessonDir.name}"
+}
+
+def findDependencies(codeDir) {
+    def dependenciesFile = new File(codeDir, 'dependsOn')
+    def readmeFile = new File(codeDir, 'README.md')
+
     def result = []
-    if (dir.exists()) {
-        dir.readLines().each { line -> 
+    if (dependenciesFile.exists()) {
+        dependenciesFile.readLines().each { line -> 
             result.addAll(fileTree(line).matching {include '*.java'})
-            result.addAll(findDependencies(new File(line, 'dependsOn')))
+            result.addAll(findDependencies(new File(line)))
+        }
+    }
+
+    findDependenciesFromReadme(readmeFile).each { dependency ->
+        result << dependency
+        result << findDependencies(new File(dependency))
+    }
+
+    return result
+}
+
+def findDependenciesFromReadme(readMeFile) {
+    if (!readMeFile.exists()) {
+        return []
+    }
+
+    def result = []
+    def isDependencies = false
+    readMeFile.readLines().each { line -> 
+        if (isDependencies && line.startsWith('###')) {
+            isDependencies = false
+        }
+
+        if (line == '### Depends On') {
+            isDependencies = true
+        }
+
+        if (isDependencies && line.startsWith('- ')) {
+            result << line.substring('- '.length())
         }
     }
     return result
 }
 
+def findExecutions(lessonDir, codeDir) {
+    def readMe = new File(codeDir, 'README.md')
+    def executions = []
+    if (readMe.exists()) {
+        def execution = null
+        def isOutput = false
+        readMe.readLines().each { line ->
+            if (execution != null && line == "```") {
+                return
+            }
+
+            if (execution == null && line == "```") {
+                execution = ['output': '']
+                executions << execution
+                isOutput = false
+            }
+
+            if (line.startsWith('class:')) {
+                execution['className'] = line.substring('class: '.length())
+            }
+
+            if (isOutput) {
+                execution['output'] += line + System.lineSeparator()
+            }
+
+            if (line == 'output:') {
+                isOutput = true
+            }
+        }
+    }
+
+    return executions
+}
+
+def getCompileDir(lessonDir, codeDir) {
+    return file("${buildDir}/compiled/${lessonDir.name}/${codeDir.name}")
+}
+
 new File(".").eachDir { lessonDir ->
     // For each Lesson Directory
     if (lessonDir.name.startsWith("Lesson")) {
-
-        // Catch all clean tasks for this lesson
-        task "clean${lessonDir.name}" {}
-        clean.dependsOn "clean${lessonDir.name}"
-
-        // Catch all compile tasks for this lesson
-        task "compile${lessonDir.name}" {}
-        compile.dependsOn "compile${lessonDir.name}"
+        createLessonCleanTask(lessonDir)
+        createLessonCompileTask(lessonDir)
+        createLessonTestTask(lessonDir)
 
         lessonDir.eachDir { codeDir ->
             if (codeDir.name.startsWith("Exercise")
                 || codeDir.name.startsWith("Activity")
                 || codeDir.name.startsWith("Snippet")) {
 
-                def compileDir = file("${buildDir}/compiled/${lessonDir.name}/${codeDir.name}")
-
-                def javaFiles = []
-                codeDir.eachFile {
-                    if (it.name.endsWith('.java')) {
-                        javaFiles.add(it)
-                    }
-                }
-
-                javaFiles.addAll(findDependencies(new File(codeDir, 'dependsOn')))
-
-                // Clean Activity/Exercise/Snippet Task
-                task "clean${lessonDir.name}${codeDir.name}" (type:Delete) {
-                    delete compileDir
-                }
-                tasks["clean${lessonDir.name}"].dependsOn "clean${lessonDir.name}${codeDir.name}"
-
-                // Compile Activity/Exercise/Snippet Task
-                task "compile${lessonDir.name}${codeDir.name}" (type:JavaCompile) {
-                    classpath = files(codeDir)
-                    destinationDir = compileDir
-                    source = files(javaFiles)
-                    sourceCompatibility = '1.8'
-                    targetCompatibility = '1.8'
-                }
-                tasks["compile${lessonDir.name}"].dependsOn "compile${lessonDir.name}${codeDir.name}"
+                createCodeDirCleanTask(lessonDir, codeDir)
+                createCodeDirCompileTask(lessonDir, codeDir)
+                createCodeDirTestTask(lessonDir, codeDir)
             }
         }
     }
