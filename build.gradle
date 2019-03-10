@@ -53,12 +53,15 @@ def createCodeDirCompileTask(lessonDir, codeDir) {
 def createCodeDirTestTask(lessonDir, codeDir) {
     findExecutions(lessonDir, codeDir).eachWithIndex { execution, index ->
         def testTask = task "test${lessonDir.name}${codeDir.name}_${index + 1}" (type: JavaExec) {
+            args = execution.args
             classpath = files(getCompileDir(lessonDir, codeDir))
             main = execution.className
+            standardInput = new ByteArrayInputStream(execution.inputs.join('\n').getBytes())
             standardOutput = new ByteArrayOutputStream()
 
             doLast {
-                assertEquals(execution.output, standardOutput.toString())
+                def cleanedOutput = standardOutput.toString().replace(System.lineSeparator(), "")
+                assertEquals(execution.output, cleanedOutput)
             }
         }
         tasks["test${lessonDir.name}"].dependsOn testTask
@@ -137,17 +140,25 @@ def findExecutions(lessonDir, codeDir) {
             }
 
             if (execution == null && line == "```") {
-                execution = ['output': '']
+                execution = ['args': [], 'inputs': [], 'output': '']
                 executions << execution
                 isOutput = false
             }
 
+            if (line.startsWith('args')) {
+                execution['args'] << line.substring('args:'.length()).trim()
+            }
+
             if (line.startsWith('class:')) {
-                execution['className'] = line.substring('class: '.length())
+                execution['className'] = line.substring('class:'.length()).trim()
+            }
+
+            if (line.startsWith('inputs:')) {
+                execution['inputs'] << line.substring('inputs:'.length()).trim()
             }
 
             if (isOutput) {
-                execution['output'] += line + System.lineSeparator()
+                execution['output'] += line
             }
 
             if (line == 'output:') {
