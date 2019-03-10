@@ -93,17 +93,9 @@ def createLessonTestTask(lessonDir) {
 }
 
 def findDependencies(codeDir) {
-    def dependenciesFile = new File(codeDir, 'dependsOn')
-    def readmeFile = new File(codeDir, 'README.md')
-
     def result = []
-    if (dependenciesFile.exists()) {
-        dependenciesFile.readLines().each { line -> 
-            result.addAll(fileTree(line).matching {include '*.java'})
-            result.addAll(findDependencies(new File(line)))
-        }
-    }
 
+    def readmeFile = new File(codeDir, 'README.md')
     findDependenciesFromReadme(readmeFile).each { dependency ->
         result << dependency
         result << findDependencies(new File(dependency))
