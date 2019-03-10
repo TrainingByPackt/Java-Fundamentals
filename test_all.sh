@@ -1,31 +1,31 @@
 #!/bin/bash -e
 
+# Compile everything
+./gradlew compile
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
+pushd build > /dev/null
+pushd compiled > /dev/null
 
-for dir in $(find . -name "*Activity*" -type d); do
-    CLASSPATH=$CLASSPATH:$dir
+declare -a lessons=("Lesson04" "Lesson05" "Lesson06" "Lesson07")
+declare -a directories=("Activity" "Exercise" "Snippet")
+
+for lesson in "${lessons[@]}"; do
+    pushd $lesson > /dev/null
+    for dirToFind in "${directories[@]}"; do
+        for dir in $(find . -name "*$dirToFind*" -type d); do
+            CLASSPATH=$CLASSPATH:build/compiled/$lesson/$dir
+        done
+    done
+    popd > /dev/null
 done
 
-for dir in $(find . -name "*Exercise*" -type d); do
-    CLASSPATH=$CLASSPATH:$dir
-done
+popd > /dev/null
+popd > /dev/null
 
-for dir in $(find . -name "*Shared*" -type d); do
-    CLASSPATH=$CLASSPATH:$dir
-done
-
-for dir in $(find . -name "*Snippet*" -type d); do
-    CLASSPATH=$CLASSPATH:$dir
-done
-
+echo $CLASSPATH
 USERS_FILE=Lesson07/data/users.csv
-
-echo "Deleting old class files..."
-find . -name "*.class" -print0 | xargs -0 rm
-
-echo "Compiling everything..."
-find . -name "*.java" -print0 | xargs -0 javac -cp $CLASSPATH
 
 execute_class() {
     echo "-- Executing $1 --"
@@ -64,7 +64,7 @@ fi
 if [[ $# -eq 0 || "$1" -eq "5" ]]; then
     execute_class_with_args ShowSalaryAndCommission
     execute_class_with_args UseAbstractClass
-    execute_class_with_args UseInterfaces
+    # execute_class_with_args UseInterfaces
 fi
 
 # Lesson 06
@@ -72,8 +72,8 @@ if [[ $# -eq 0 || "$1" -eq "6" ]]; then
     execute_class_with_args CalculatorWithDynamicOperator
 fi
 
-# Lesson 08
-if [[ $# -eq 0 || "$1" -eq "8" ]]; then
+# Lesson 07
+if [[ $# -eq 0 || "$1" -eq "7" ]]; then
     execute_class AddAndFetch
     execute_class AddAndFetchWithGenerics
     execute_class ComparingStrings
