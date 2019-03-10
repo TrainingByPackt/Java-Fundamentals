@@ -56,7 +56,7 @@ def createCodeDirTestTask(lessonDir, codeDir) {
             classpath = files(getCompileDir(lessonDir, codeDir))
             dependsOn tasks["compile${lessonDir.name}${codeDir.name}"]
             main = execution.className
-            standardInput = new ByteArrayInputStream(execution.inputs.join('\n').getBytes())
+            standardInput = new ByteArrayInputStream(execution.inputs.join(System.lineSeparator()).getBytes())
             standardOutput = new ByteArrayOutputStream()
 
             doLast {

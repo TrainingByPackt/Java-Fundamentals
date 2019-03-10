@@ -6,6 +6,7 @@ public class CommandLineCalculator {
         while (true) {
             printOptions();
             String option = scanner.next();
+            System.err.println(option);
 
             if (option.equalsIgnoreCase("Q")) {
                 break;
