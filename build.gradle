@@ -2,18 +2,6 @@
 task compile {}
 task clean {}
 
-// Calculate classpath
-def dirsWithJavaFiles = [];
-new File(".").eachDir { lessonDir ->
-    if (lessonDir.name.startsWith("Lesson")) {
-        lessonDir.eachDir { codeDir ->
-            if (codeDir.listFiles().count({it.name.endsWith(".java")}) > 0) {
-                dirsWithJavaFiles << codeDir
-            }
-        }
-    }
-}
-
 new File(".").eachDir { lessonDir ->
     // For each Lesson Directory
     if (lessonDir.name.startsWith("Lesson")) {
@@ -27,7 +15,11 @@ new File(".").eachDir { lessonDir ->
         compile.dependsOn "compile${lessonDir.name}"
 
         lessonDir.eachDir { codeDir ->
-            if (codeDir.name.startsWith("Exercise") || codeDir.name.startsWith("Activity") || codeDir.name.startsWith("Snippet")) {
+            if (codeDir.name.startsWith("Exercise")
+                || codeDir.name.startsWith("Activity")
+                || codeDir.name.startsWith("Snippet")
+                || codeDir.name.startsWith("Shared")) {
+
                 def javaFiles = []
                 codeDir.eachFile {
                     if (it.name.endsWith('.java')) {
@@ -44,7 +36,7 @@ new File(".").eachDir { lessonDir ->
                 tasks["clean${lessonDir.name}"].dependsOn "clean${lessonDir.name}${codeDir.name}"
 
                 task "compile${lessonDir.name}${codeDir.name}" (type:JavaCompile) {
-                    classpath = files(dirsWithJavaFiles)
+                    classpath = files(codeDir)
                     destinationDir = codeDir
                     source = files(javaFiles)
                     sourceCompatibility = '1.8'
