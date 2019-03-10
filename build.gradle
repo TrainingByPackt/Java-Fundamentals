@@ -2,16 +2,15 @@
 task compile {}
 task clean {}
 
-// Calculate classpath
-def dirsWithJavaFiles = [];
-new File(".").eachDir { lessonDir ->
-    if (lessonDir.name.startsWith("Lesson")) {
-        lessonDir.eachDir { codeDir ->
-            if (codeDir.listFiles().count({it.name.endsWith(".java")}) > 0) {
-                dirsWithJavaFiles << codeDir
-            }
+def findDependencies(dir) {
+    def result = []
+    if (dir.exists()) {
+        dir.readLines().each { line -> 
+            result.addAll(fileTree(line).matching {include '*.java'})
+            result.addAll(findDependencies(new File(line, 'dependsOn')))
         }
     }
+    return result
 }
 
 new File(".").eachDir { lessonDir ->
@@ -27,7 +26,12 @@ new File(".").eachDir { lessonDir ->
         compile.dependsOn "compile${lessonDir.name}"
 
         lessonDir.eachDir { codeDir ->
-            if (codeDir.name.startsWith("Exercise") || codeDir.name.startsWith("Activity") || codeDir.name.startsWith("Snippet")) {
+            if (codeDir.name.startsWith("Exercise")
+                || codeDir.name.startsWith("Activity")
+                || codeDir.name.startsWith("Snippet")) {
+
+                def compileDir = file("${buildDir}/compiled/${lessonDir.name}/${codeDir.name}")
+
                 def javaFiles = []
                 codeDir.eachFile {
                     if (it.name.endsWith('.java')) {
@@ -35,22 +39,22 @@ new File(".").eachDir { lessonDir ->
                     }
                 }
 
-                task "clean${lessonDir.name}${codeDir.name}" (type:Delete) {
-                    delete fileTree(codeDir).matching {
-                        include '*.class'
-                    }
-                }
+                javaFiles.addAll(findDependencies(new File(codeDir, 'dependsOn')))
 
+                // Clean Activity/Exercise/Snippet Task
+                task "clean${lessonDir.name}${codeDir.name}" (type:Delete) {
+                    delete compileDir
+                }
                 tasks["clean${lessonDir.name}"].dependsOn "clean${lessonDir.name}${codeDir.name}"
 
+                // Compile Activity/Exercise/Snippet Task
                 task "compile${lessonDir.name}${codeDir.name}" (type:JavaCompile) {
-                    classpath = files(dirsWithJavaFiles)
-                    destinationDir = codeDir
+                    classpath = files(codeDir)
+                    destinationDir = compileDir
                     source = files(javaFiles)
                     sourceCompatibility = '1.8'
                     targetCompatibility = '1.8'
                 }
-
                 tasks["compile${lessonDir.name}"].dependsOn "compile${lessonDir.name}${codeDir.name}"
             }
         }

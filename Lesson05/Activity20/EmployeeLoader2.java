@@ -1,8 +1,12 @@
 import java.util.Random;
 
-public class Employee {
+public class EmployeeLoader2 {
     private static Random random = new Random(15);
 
+    /**
+     * Generates a new randomly generated employee with a randomly picked gross
+     * salary.
+     */
     public static Employee getEmployeeWithSalary() {
         int nextNumber = random.nextInt(4);
 
@@ -23,5 +27,4 @@ public class Employee {
             return new GenericManager(grossSalary);
         }
     }
-
 }

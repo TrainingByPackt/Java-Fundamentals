@@ -1,15 +1,16 @@
 import java.util.Scanner;
+
 public class CommandLineCalculator {
-    public static void main (String [] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
-while (true) {
+        while (true) {
             printOptions();
             String option = scanner.next();
 
             if (option.equalsIgnoreCase("Q")) {
                 break;
             }
-System.out.print("Type first operand: ");
+            System.out.print("Type first operand: ");
             double operand1 = scanner.nextDouble();
 
             System.out.print("Type second operand: ");
@@ -20,7 +21,8 @@ System.out.print("Type first operand: ");
             System.out.println();
         }
     }
-private static void printOptions() {
+
+    private static void printOptions() {
         System.out.println("Q (or q) - To quit");
         System.out.println("An operator. If not supported, will use sum.");
         System.out.print("Type your option: ");
