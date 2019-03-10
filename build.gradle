@@ -17,8 +17,9 @@ new File(".").eachDir { lessonDir ->
         lessonDir.eachDir { codeDir ->
             if (codeDir.name.startsWith("Exercise")
                 || codeDir.name.startsWith("Activity")
-                || codeDir.name.startsWith("Snippet")
-                || codeDir.name.startsWith("Shared")) {
+                || codeDir.name.startsWith("Snippet")) {
+
+                def compileDir = file("${buildDir}/compiled/${lessonDir.name}/${codeDir.name}")
 
                 def javaFiles = []
                 codeDir.eachFile {
@@ -27,22 +28,27 @@ new File(".").eachDir { lessonDir ->
                     }
                 }
 
-                task "clean${lessonDir.name}${codeDir.name}" (type:Delete) {
-                    delete fileTree(codeDir).matching {
-                        include '*.class'
+                def d = new File(codeDir, 'dependsOn')
+                if (d.exists()) {
+                    d.readLines().each { line -> 
+                        javaFiles.addAll(fileTree(line).matching {include '*.java'})
                     }
                 }
 
+                // Clean Activity/Exercise/Snippet Task
+                task "clean${lessonDir.name}${codeDir.name}" (type:Delete) {
+                    delete compileDir
+                }
                 tasks["clean${lessonDir.name}"].dependsOn "clean${lessonDir.name}${codeDir.name}"
 
+                // Compile Activity/Exercise/Snippet Task
                 task "compile${lessonDir.name}${codeDir.name}" (type:JavaCompile) {
                     classpath = files(codeDir)
-                    destinationDir = codeDir
+                    destinationDir = compileDir
                     source = files(javaFiles)
                     sourceCompatibility = '1.8'
                     targetCompatibility = '1.8'
                 }
-
                 tasks["compile${lessonDir.name}"].dependsOn "compile${lessonDir.name}${codeDir.name}"
             }
         }
