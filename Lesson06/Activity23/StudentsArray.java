@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class StudentsArray extends Student{
+public class StudentsArray extends Student {
    public static void main(String[] args){
 
        ArrayList<Student> students = new ArrayList<>();
