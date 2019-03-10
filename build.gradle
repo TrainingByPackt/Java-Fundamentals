@@ -15,7 +15,6 @@ task compile {}
 task clean {}
 
 task test {}
-test.dependsOn compile
 
 // Catch all tasks
 task build {}
@@ -53,12 +52,25 @@ def createCodeDirCompileTask(lessonDir, codeDir) {
 def createCodeDirTestTask(lessonDir, codeDir) {
     findExecutions(lessonDir, codeDir).eachWithIndex { execution, index ->
         def testTask = task "test${lessonDir.name}${codeDir.name}_${index + 1}" (type: JavaExec) {
+            args = execution.args
             classpath = files(getCompileDir(lessonDir, codeDir))
+            dependsOn tasks["compile${lessonDir.name}${codeDir.name}"]
             main = execution.className
+            standardInput = new ByteArrayInputStream(execution.inputs.join(System.lineSeparator()).getBytes())
             standardOutput = new ByteArrayOutputStream()
 
             doLast {
-                assertEquals(execution.output, standardOutput.toString())
+                def cleanedExpectedOutput = execution.output
+                    .replaceAll("\\d+ms", "dms")
+                    .replace("\t", "    ")
+                    .replaceAll("\\.+",'.')
+                    .replaceAll("[\n\r]+", "")
+                def cleanedActualOutput = standardOutput.toString()
+                    .replaceAll("\\d+ms", "dms")
+                    .replace("\t", "    ")
+                    .replaceAll("\\.+",'.')
+                    .replaceAll("[\n\r]+", "")
+                assertEquals(cleanedExpectedOutput, cleanedActualOutput)
             }
         }
         tasks["test${lessonDir.name}"].dependsOn testTask
@@ -81,17 +93,9 @@ def createLessonTestTask(lessonDir) {
 }
 
 def findDependencies(codeDir) {
-    def dependenciesFile = new File(codeDir, 'dependsOn')
-    def readmeFile = new File(codeDir, 'README.md')
-
     def result = []
-    if (dependenciesFile.exists()) {
-        dependenciesFile.readLines().each { line -> 
-            result.addAll(fileTree(line).matching {include '*.java'})
-            result.addAll(findDependencies(new File(line)))
-        }
-    }
 
+    def readmeFile = new File(codeDir, 'README.md')
     findDependenciesFromReadme(readmeFile).each { dependency ->
         result << dependency
         result << findDependencies(new File(dependency))
@@ -131,21 +135,31 @@ def findExecutions(lessonDir, codeDir) {
         def isOutput = false
         readMe.readLines().each { line ->
             if (execution != null && line == "```") {
+                execution = null
+                isOutput = false
                 return
             }
 
             if (execution == null && line == "```") {
-                execution = ['output': '']
+                execution = ['args': [], 'inputs': [], 'output': '']
                 executions << execution
                 isOutput = false
             }
 
+            if (line.startsWith('args')) {
+                execution['args'] << line.substring('args:'.length()).trim()
+            }
+
             if (line.startsWith('class:')) {
-                execution['className'] = line.substring('class: '.length())
+                execution['className'] = line.substring('class:'.length()).trim()
+            }
+
+            if (line.startsWith('inputs:')) {
+                execution['inputs'] << line.substring('inputs:'.length()).trim()
             }
 
             if (isOutput) {
-                execution['output'] += line + System.lineSeparator()
+                execution['output'] += line
             }
 
             if (line == 'output:') {

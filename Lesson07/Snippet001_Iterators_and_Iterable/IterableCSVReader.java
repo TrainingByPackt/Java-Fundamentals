@@ -6,13 +6,13 @@ import java.util.NoSuchElementException;
 public class IterableCSVReader extends CSVReader implements Iterable {
 
     private String[] currentRow;
-    private String [] nextRow;
+    private String[] nextRow;
 
     public IterableCSVReader(BufferedReader reader) throws IOException {
         super(reader);
         currentRow = this.readRow();
         nextRow = this.readRow();
-    } 
+    }
 
     public Iterator iterator() {
         return new Iterator() {
