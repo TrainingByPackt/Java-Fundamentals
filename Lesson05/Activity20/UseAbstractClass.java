@@ -2,7 +2,7 @@ public class UseAbstractClass {
 
     public static void main (String [] args) {
         for (int i = 0; i < 10; i++) {
-            Employee employee = EmployeeLoader.getEmployeeWithSalary();
+            Employee employee = EmployeeLoader2.getEmployeeWithSalary();
             System.out.println("--- " + employee.getClass().getName());
 
             System.out.println("Net Salary: " + employee.getNetSalary());
