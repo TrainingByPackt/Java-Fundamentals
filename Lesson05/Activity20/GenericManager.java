@@ -1,12 +1,12 @@
 public class GenericManager extends GenericEmployee {
 
-    public GenericManager(double grossSalary) {
-        super(grossSalary);
-    }
+  public GenericManager(double grossSalary) {
+    super(grossSalary);
+  }
 
-    @Override
-    public double getTax() {
-        return (28.0/100) * getGrossSalary();
-    }
+  @Override
+  public double getTax() {
+    return (28.0 / 100) * getGrossSalary();
+  }
 
 }

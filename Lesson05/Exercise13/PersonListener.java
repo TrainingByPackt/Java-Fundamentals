@@ -1,4 +1,5 @@
 public interface PersonListener {
-void onPersonWalking();
-void onPersonSleeping();
+  void onPersonWalking();
+
+  void onPersonSleeping();
 }
