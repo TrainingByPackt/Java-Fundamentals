@@ -2,4 +2,6 @@ build/
 *.class
 *.data
 .gradle/
+.project
+.settings/
 .vscode/

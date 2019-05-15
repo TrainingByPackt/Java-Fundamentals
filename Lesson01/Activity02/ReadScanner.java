@@ -1,8 +1,9 @@
 import java.util.Scanner;
-public class ReadScanner
-{
+public class ReadScanner {
+
 	static Scanner sc = new Scanner(System.in);
-  	public static void main(String[] args) {
+  
+	public static void main(String[] args) {
     		System.out.print("Enter a number: ");
     		int a = sc.nextInt();
     		System.out.print("Enter 2nd number: ");
