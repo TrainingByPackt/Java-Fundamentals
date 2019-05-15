@@ -1,3 +1,3 @@
 public abstract class Patient {
-public abstract String getPersonType();
+  public abstract String getPersonType();
 }

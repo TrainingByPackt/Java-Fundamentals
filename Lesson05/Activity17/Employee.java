@@ -1,5 +1,6 @@
 public interface Employee {
-    double getNetSalary();
-    double getTax();
- }
+  double getNetSalary();
+
+  double getTax();
+}
  

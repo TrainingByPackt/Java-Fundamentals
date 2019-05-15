@@ -1,4 +1,5 @@
 public interface AnimalListener {
-   void onAnimalMoved();
-   void onAnimalMadeSound();
+  void onAnimalMoved();
+
+  void onAnimalMadeSound();
 }

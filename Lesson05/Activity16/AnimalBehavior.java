@@ -1,4 +1,5 @@
 public interface AnimalBehavior {
-   void move();
-   void makeSound();
+  void move();
+
+  void makeSound();
 }
