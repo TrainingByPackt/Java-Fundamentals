@@ -1,0 +1,23 @@
+name: Build and Deploy
+
+on: push
+
+jobs:
+
+  build_and_deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '8'
+          java-package: jdk
+          architecture: x64
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Test
+        run: ./gradlew build
