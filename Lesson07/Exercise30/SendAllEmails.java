@@ -49,7 +49,7 @@ public class SendAllEmails {
             return;
         }
 
-        System.out.print("\nSending email");
+        System.out.print("\nSending email.");
         String email = queue.poll();
         String classpath = System.getProperty("java.class.path");
         String[] command = new String[]{"java", "-cp", classpath, "EmailSender", email};
