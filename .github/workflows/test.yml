@@ -1,11 +1,11 @@
-name: Build and Deploy
+name: Build and Test
 
 on: push
 
 jobs:
 
   build_and_deploy:
-    name: Build and Deploy
+    name: Build and Test
     runs-on: ubuntu-20.04
 
     steps:
